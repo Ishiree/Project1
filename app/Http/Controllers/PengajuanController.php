@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Item;
 use Illuminate\Http\Request;
+use App\Pengajuan;
 
-class PagesController extends Controller
+class PengajuanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class PagesController extends Controller
      */
     public function index()
     {
-        $items=Item::all();
-        return view('daftar_barang', compact('items'));
+        $pengajuan=Pengajuan::all();
+        return view('daftar_pengajuan', compact('pengajuan'));
     }
 
     /**
@@ -23,9 +23,9 @@ class PagesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        return view('pengajuan');
     }
 
     /**
@@ -36,7 +36,13 @@ class PagesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $pengajuan = new Pengajuan;
+        $pengajuan->nama_barang = $request->nama_barang;
+        $pengajuan->quantity = $request->quantity;
+        $pengajuan->total_harga = $request->total_harga;
+        $pengajuan->nama_pemohon = $request->nama_pemohon;
+        $pengajuan->save();
+        return redirect(route('daftar_pengajuan.index'));
     }
 
     /**
@@ -47,7 +53,8 @@ class PagesController extends Controller
      */
     public function show($id)
     {
-        //
+        $pengajuan=Pengajuan::find($id);
+        return view('daftar_pengajuan', compact('pengajuan'));
     }
 
     /**
@@ -70,7 +77,13 @@ class PagesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $pengajuan = Pengajuan::find($id);
+        $pengajuan->nama_barang = $request->nama_barang;
+        $pengajuan->quantity = $request->quantity;
+        $pengajuan->total_harga = $request->total_harga;
+        $pengajuan->nama_pemohon = $request->nama_pemohon;
+        $pengajuan->save();
+        return redirect('pengajuan.index');
     }
 
     /**

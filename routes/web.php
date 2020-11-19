@@ -21,4 +21,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/bagian1', 'PagesController@index');
+Route::resource('daftar_barang','PagesController');
+
+Route::resource('daftar_pengajuan','PengajuanController');
+
+Route::get('pengajuan', function () {
+    return view('pengajuan');
+});
